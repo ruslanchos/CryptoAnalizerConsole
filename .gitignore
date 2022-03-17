@@ -1,0 +1,5 @@
+#IGNORE
+.idea/
+target/
+*.log
+*.class
