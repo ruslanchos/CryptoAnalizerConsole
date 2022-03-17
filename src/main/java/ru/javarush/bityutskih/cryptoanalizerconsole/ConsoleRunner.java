@@ -20,7 +20,7 @@ public class ConsoleRunner {
 
     }
     public static String decoding(String cryptoText, int Key){
-        cryptoText = cryptoText.toUpperCase();
+        cryptoText = cryptoText.toLowerCase();
         String printText = "";
         for (int i = 0; i <cryptoText.length() ; i++) {
             int charIndex = ALPHABET.indexOf(cryptoText.charAt(i));
@@ -46,6 +46,9 @@ public class ConsoleRunner {
 
         String cipherText = encoding(text,Key);
         System.out.println("ЗАШИФРОВАННЫЙ ТЕКСТ:" + cipherText);
+
+        System.out.println("РАСШИФРОВКА СООБЩЕНИЯ >>" + decoding(cipherText,Key));
+
     }
 
 }
