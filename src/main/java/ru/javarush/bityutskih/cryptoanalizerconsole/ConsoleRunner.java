@@ -5,14 +5,14 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class ConsoleRunner {
-    static String ALPHABET = "абвгдежзиклмнопрстуфхцчшщъыьэя";
+    static String ALPHABET = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя.,\\\":-!? ";
 
     public static String encoding(String printText, int Key) {
         printText = printText.toLowerCase();
         String  cryptoText = "";
         for (int i = 0; i < printText.length(); i++) {
             int charIndex = ALPHABET.indexOf(printText.charAt(i));
-            int newIndex = (charIndex + Key) % 30;
+            int newIndex = (charIndex + Key) % 33;
             char cipherChar = ALPHABET.charAt(newIndex);
             cryptoText = cryptoText + cipherChar;
         }
@@ -24,7 +24,7 @@ public class ConsoleRunner {
         String printText = "";
         for (int i = 0; i <cryptoText.length() ; i++) {
             int charIndex = ALPHABET.indexOf(cryptoText.charAt(i));
-            int newIndex = (charIndex - Key) % 30;
+            int newIndex = (charIndex - Key) % 33;
             if (newIndex < 0) {
                 newIndex = ALPHABET.length() + newIndex;
             }
