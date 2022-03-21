@@ -1,6 +1,7 @@
 package ru.javarush.bityutskih.cryptoanalizerconsole;
 
 import java.io.*;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -9,7 +10,29 @@ import java.util.*;
 public class ConsoleRunner {
     static String ALPHABET = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя.,\\\":-!? ";
 
-    public  void encryptFile() {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String menu = "Программа выполняет следующие функции:\n" +
+                "1) Шифровка текста\n" +
+                "2) Расшифровка текста с помощью ключа\n" +
+                "3) Расшифровка текста с помощью brute force\n" +
+                "4) Расшифровка текста с помощью статистического анализа.\n";
+
+        System.out.println(menu);
+        System.out.println("ENTER NUMBER:");
+
+        ConsoleRunner consoleRunner = new ConsoleRunner();
+
+        switch (scanner.nextLine()) {
+            case "1" -> consoleRunner.encryptFile();
+            case "2" -> consoleRunner.decryptFile();
+            case "3" -> consoleRunner.decryptBrutForce();
+            case "4" -> consoleRunner.decryptStatAnalyse();
+
+        }
+    }
+
+    public void encryptFile() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("ВВДИТЕ ПУТЬ К ФАЙЛУ >>");
         String inputFileName = scanner.nextLine();
@@ -46,7 +69,7 @@ public class ConsoleRunner {
         }
     }
 
-    private  void decryptFile() {
+    private void decryptFile() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("ВВДИТЕ ПУТЬ К ШИФРОВАННОМУ ФАЙЛУ >>");
         String inputFileName = scanner.nextLine();
@@ -84,7 +107,8 @@ public class ConsoleRunner {
             fileNotFoundException.printStackTrace();
         }
     }
-    public void  decryptBrutForce() {
+
+    public void decryptBrutForce() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("ВВДИТЕ ПУТЬ К ШИФРОВАННОМУ ФАЙЛУ >>");
         String inputFileName = scanner.nextLine();
@@ -123,6 +147,7 @@ public class ConsoleRunner {
 
                 for (String string : outputData) {
                     if (string.matches("(.*)[a-zA-Z](.*)")) {
+                        //if (string.matches("(.*)[а-яА-Я](.*)")) {  не работает
                         continue;
                     }
 
@@ -130,6 +155,7 @@ public class ConsoleRunner {
                     for (String s : stringsLength) {
                         if (s.length() > 25) {
                             isCorrectLength = false;
+                            break;
                         }
                     }
 
@@ -149,10 +175,11 @@ public class ConsoleRunner {
                     countWords += words.length;
                 }
 
-                isCorrectPunt = notCorrectPunch > countWords / 10 ? false : true;
+                isCorrectPunt = notCorrectPunch <= countWords / 10;
+                //isCorrectPunt = notCorrectPunch > countWords / 10 ? false : true;
 
                 if (isCorrectLength & isCorrectPunt) {
-                    System.out.println("КЛЮЧ >>" + key);
+                    System.out.println("ПОДОБРАННЫЙ КЛЮЧ >>" + key);
                     break;
                 }
                 outputData.clear();
@@ -165,6 +192,7 @@ public class ConsoleRunner {
             fileNotFoundException.printStackTrace();
         }
     }
+
     public void  decryptStatAnalyse() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("ВВДИТЕ ПУТЬ К ШИФРОВАННОМУ ФАЙЛУ >>");
@@ -243,27 +271,8 @@ public class ConsoleRunner {
             fileNotFoundException.printStackTrace();
         }
     }
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        String menu = "Программа выполняет следующие функции:\n" +
-                "1) Шифровка текста\n" +
-                "2) Расшифровка текста с помощью ключа\n" +
-                "3) Расшифровка текста с помощью brute force\n" +
-                "4) Расшифровка текста с помощью статистического анализа.\n";
-        System.out.println(menu);
-        System.out.println("ENTER NUMBER:");
-
-        ConsoleRunner consoleRunner = new ConsoleRunner();
-
-        switch (scanner.nextLine()) {
-            case "1" -> consoleRunner.encryptFile();
-            case "2" -> consoleRunner.decryptFile();
-            case "3" -> consoleRunner.decryptBrutForce();
-            case "4" -> consoleRunner.decryptStatAnalyse();
-        }
-    }
 }
+
 
 
 
